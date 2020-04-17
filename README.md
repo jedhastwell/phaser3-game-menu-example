@@ -1,5 +1,5 @@
-# Phaser 3 + ES6 + Webpack Boilerplate
-A boilerplate project for creating games with Phaser3, ES6 and Webpack.
+# Phaser 3 Game Menu Structure Example
+A simple architecture for managing the flow between a game menu and game levels. Also demonstrates how assets could be preloaded prior to starting the game.
 
 ## Setup
 

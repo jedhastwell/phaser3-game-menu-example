@@ -1,29 +1,28 @@
 {
-  "name": "phaser3-es6-webpack-boilerplate",
+  "name": "phaser3-es6-vite-boilerplate",
+  "description": "A boilerplate project for creating games with Phaser3, TypeScript ES6 and Vite",
+  "private": true,
   "version": "1.0.0",
-  "description": "A boilerplate project for creating games with Phaser3, ES6 and Webpack",
-  "main": "index.js",
-  "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Jed Hastwell",
+  "author": "Andrey Zolotarev",
   "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^2.0.2",
-    "copy-webpack-plugin": "^5.1.1",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "raw-loader": "^2.0.0",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.50.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3"
   },
   "dependencies": {
-    "phaser": "^3.21.0"
+    "phaser": "^3.60.0",
+    "phaser3-nineslice": "^0.5.0"
   }
 }

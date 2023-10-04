@@ -78,24 +78,9 @@ export class MainMenuScene extends Phaser.Scene {
 				window.alert('Всё, пока!')
 			},
 		})
-
-		// Preload all other required assets.
-		this.load.setPath('assets')
-		this.load.spritesheet('hero-run-sheet', 'hero/run.png', {
-			frameWidth: 32,
-			frameHeight: 64,
-		})
 	}
 
-	create() {
-		// Create global animations
-		this.anims.create({
-			key: 'hero-running',
-			frames: this.anims.generateFrameNumbers('hero-run-sheet'),
-			frameRate: 10,
-			repeat: -1,
-		})
-	}
+	create() {}
 
 	update() {}
 }

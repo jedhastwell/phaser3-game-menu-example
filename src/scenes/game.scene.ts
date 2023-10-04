@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import gameState from '../model/gameState'
 import levels, { ILevel } from '../data/levels'
 
-class Game extends Phaser.Scene {
+export class GameScene extends Phaser.Scene {
 	constructor(
 		private levelIndex: number,
 		private levelData: ILevel,
@@ -20,6 +20,7 @@ class Game extends Phaser.Scene {
 	create() {
 		const backButton = this.add.text(10, 10, this.levelData.name, {
 			font: '48px Arial',
+			// @ts-ignore
 			fill: '#000000',
 		})
 		backButton.setInteractive({
@@ -37,6 +38,7 @@ class Game extends Phaser.Scene {
 
 		const loseButton = this.add.text(300, 400, 'Lose', {
 			font: '40px Arial',
+			// @ts-ignore
 			fill: '#000000',
 		})
 		loseButton.setInteractive({
@@ -45,6 +47,7 @@ class Game extends Phaser.Scene {
 		loseButton.on('pointerup', this.failLevel, this)
 		const winButton = this.add.text(500, 400, 'Win', {
 			font: '40px Arial',
+			// @ts-ignore
 			fill: '#000000',
 		})
 		winButton.setInteractive({
@@ -64,5 +67,3 @@ class Game extends Phaser.Scene {
 
 	update() {}
 }
-
-export default Game

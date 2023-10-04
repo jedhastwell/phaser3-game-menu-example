@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import gameState from '../model/gameState'
 import levels from '../data/levels'
 
-class LevelsMenu extends Phaser.Scene {
+export class LevelsMenuScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'LevelsMenuScene' })
 	}
@@ -14,6 +14,7 @@ class LevelsMenu extends Phaser.Scene {
 	create() {
 		const menu = this.add.text(10, 10, `Levels menu`, {
 			font: '48px Arial',
+			// @ts-ignore
 			fill: '#000000',
 		})
 
@@ -32,6 +33,7 @@ class LevelsMenu extends Phaser.Scene {
 				levels[i].name,
 				{
 					font: '30px Arial',
+					// @ts-ignore
 					fill: '#000000',
 				},
 			)
@@ -50,5 +52,3 @@ class LevelsMenu extends Phaser.Scene {
 
 	update() {}
 }
-
-export default LevelsMenu

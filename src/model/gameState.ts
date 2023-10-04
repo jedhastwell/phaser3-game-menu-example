@@ -9,14 +9,10 @@ const GameStateDefaults: IGameState = {
 }
 
 class GameState extends Phaser.Events.EventEmitter {
-	constructor(
-		private defaults: IGameState = GameStateDefaults,
-		private _data: IGameState,
-	) {
+	constructor(private _data: IGameState) {
 		super()
-		this.defaults = GameStateDefaults
 		this._data = {
-			maxUnlockedLevel: defaults.maxUnlockedLevel,
+			maxUnlockedLevel: GameStateDefaults.maxUnlockedLevel,
 		}
 		this.load()
 	}
@@ -54,6 +50,6 @@ class GameState extends Phaser.Events.EventEmitter {
 	}
 }
 
-const gameState = new GameState(GameStateDefaults, GameStateDefaults)
+const gameState = new GameState(GameStateDefaults)
 
 export default gameState

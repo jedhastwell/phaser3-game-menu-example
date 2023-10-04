@@ -22,8 +22,10 @@ class Game extends Phaser.Scene {
 			font: '48px Arial',
 			fill: '#000000',
 		})
-		backButton.setInteractive()
-		backButton.on('pointerup', () => this.scene.start('MenuScene'))
+		backButton.setInteractive({
+			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+		})
+		backButton.on('pointerup', () => this.scene.start('LevelsMenuScene'))
 
 		const hero = this.add.sprite(
 			26 + this.levelIndex * 70,
@@ -37,23 +39,27 @@ class Game extends Phaser.Scene {
 			font: '40px Arial',
 			fill: '#000000',
 		})
-		loseButton.setInteractive()
+		loseButton.setInteractive({
+			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+		})
 		loseButton.on('pointerup', this.failLevel, this)
 		const winButton = this.add.text(500, 400, 'Win', {
 			font: '40px Arial',
 			fill: '#000000',
 		})
-		winButton.setInteractive()
+		winButton.setInteractive({
+			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+		})
 		winButton.on('pointerup', this.completeLevel, this)
 	}
 
 	failLevel() {
-		this.scene.start('MenuScene')
+		this.scene.start('LevelsMenuScene')
 	}
 
 	completeLevel() {
 		gameState.completeLevel(this.levelIndex)
-		this.scene.start('MenuScene')
+		this.scene.start('LevelsMenuScene')
 	}
 
 	update() {}

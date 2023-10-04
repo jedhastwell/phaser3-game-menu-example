@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 
-class Preloader extends Phaser.Scene {
+class MainMenu extends Phaser.Scene {
 	constructor() {
-		super({ key: 'PreloaderScene' })
+		super({ key: 'MainMenuScene' })
 	}
 
 	init() {}
@@ -33,10 +33,14 @@ class Preloader extends Phaser.Scene {
 			font: '40px Arial',
 			fill: '#000000',
 		})
-		startButton.setInteractive()
+		startButton.setInteractive({
+			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+		})
 		startButton.setOriginFromFrame()
-		startButton.on('pointerup', () => this.scene.start('MenuScene'))
+		startButton.on('pointerup', () => this.scene.start('LevelsMenuScene'))
 	}
+
+	update() {}
 }
 
-export default Preloader
+export default MainMenu

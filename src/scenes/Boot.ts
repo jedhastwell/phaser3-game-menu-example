@@ -7,6 +7,8 @@ class Boot extends Phaser.Scene {
 
 	init(data: any) {
 		console.log(data)
+
+		this.input.setDefaultCursor('url(/assets/input/diamond-sword.cur), pointer')
 	}
 
 	preload() {
@@ -17,7 +19,7 @@ class Boot extends Phaser.Scene {
 	create(data: any) {
 		console.log(data)
 		// Start the preloader
-		this.scene.start('PreloaderScene')
+		this.scene.start('MainMenuScene')
 	}
 }
 

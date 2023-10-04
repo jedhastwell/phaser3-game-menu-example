@@ -50,7 +50,6 @@ export class BootScene extends Phaser.Scene {
 		assetText.setOrigin(0.5, 0.5)
 
 		this.load.on('progress', function (value: number) {
-			console.log(value)
 			progressBar.clear()
 			progressBar.fillStyle(0xffffff, 1)
 			progressBar.fillRect(250, 280, 300 * value, 30)
@@ -61,7 +60,6 @@ export class BootScene extends Phaser.Scene {
 			assetText.setText('Loading asset: ' + file.src)
 		})
 		this.load.on('complete', function () {
-			console.log('complete')
 			progressBar.destroy()
 			progressBox.destroy()
 			loadingText.destroy()
@@ -71,7 +69,6 @@ export class BootScene extends Phaser.Scene {
 	}
 
 	preload() {
-		console.log('Preload')
 		// Preload splash logo to be displayed in the preloader scene.
 		this.load.image('logo', 'assets/phaser3-logo.png')
 		this.load.image('button-red', 'assets/ui/Outline/red.png')
@@ -80,7 +77,9 @@ export class BootScene extends Phaser.Scene {
 			frameWidth: 32,
 			frameHeight: 64,
 		})
+	}
 
+	create() {
 		// Create global animations
 		this.anims.create({
 			key: 'hero-running',
@@ -88,9 +87,7 @@ export class BootScene extends Phaser.Scene {
 			frameRate: 10,
 			repeat: -1,
 		})
-	}
 
-	create() {
 		this.scene.start('MainMenuScene')
 	}
 }

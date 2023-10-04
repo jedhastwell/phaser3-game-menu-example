@@ -20,7 +20,7 @@ export class BootScene extends Phaser.Scene {
 			style: {
 				font: '20px Arial',
 				//@ts-ignore
-				fill: '#ffffff',
+				color: '#ffffff',
 			},
 		})
 		loadingText.setOrigin(0.5, 0.5)
@@ -32,7 +32,7 @@ export class BootScene extends Phaser.Scene {
 			style: {
 				font: '18px Arial',
 				//@ts-ignore
-				fill: '#ffffff',
+				color: '#ffffff',
 			},
 		})
 		percentText.setOrigin(0.5, 0.5)
@@ -44,7 +44,7 @@ export class BootScene extends Phaser.Scene {
 			style: {
 				font: '18px Arial',
 				//@ts-ignore
-				fill: '#ffffff',
+				color: '#ffffff',
 			},
 		})
 		assetText.setOrigin(0.5, 0.5)

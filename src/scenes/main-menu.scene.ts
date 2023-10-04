@@ -24,7 +24,7 @@ export class MainMenuScene extends Phaser.Scene {
 			height: 100,
 			fontStyle: {
 				font: '30px Arial',
-				fill: '#000',
+				color: '#000',
 			},
 			onClick: () => {
 				this.scene.start('LevelsMenuScene')
@@ -40,7 +40,7 @@ export class MainMenuScene extends Phaser.Scene {
 			height: 100,
 			fontStyle: {
 				font: '30px Arial',
-				fill: '#000',
+				color: '#000',
 			},
 			onClick: () => {
 				this.scene.start('SettingsScene')
@@ -56,7 +56,7 @@ export class MainMenuScene extends Phaser.Scene {
 			height: 100,
 			fontStyle: {
 				font: '30px Arial',
-				fill: '#000',
+				color: '#000',
 			},
 			onClick: () => {
 				this.scene.start('CreditsScene')
@@ -72,7 +72,7 @@ export class MainMenuScene extends Phaser.Scene {
 			height: 100,
 			fontStyle: {
 				font: '30px Arial',
-				fill: '#000',
+				color: '#000',
 			},
 			onClick: () => {
 				window.alert('Всё, пока!')

@@ -15,7 +15,7 @@ export class LevelsMenuScene extends Phaser.Scene {
 		const menu = this.add.text(10, 10, `Levels menu`, {
 			font: '48px Arial',
 			// @ts-ignore
-			fill: '#000000',
+			color: '#000000',
 		})
 
 		menu.setInteractive({
@@ -34,7 +34,7 @@ export class LevelsMenuScene extends Phaser.Scene {
 				{
 					font: '30px Arial',
 					// @ts-ignore
-					fill: '#000000',
+					color: '#000000',
 				},
 			)
 			button.alpha = unlocked ? 1 : 0.5

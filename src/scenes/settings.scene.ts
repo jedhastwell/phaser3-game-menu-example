@@ -16,7 +16,7 @@ export class SettingsScene extends Phaser.Scene {
 		const backButton = this.add.text(10, 10, '<=Back', {
 			font: '48px Arial',
 			// @ts-ignore
-			fill: '#000000',
+			color: '#000000',
 		})
 		backButton.setInteractive({
 			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
@@ -28,7 +28,7 @@ export class SettingsScene extends Phaser.Scene {
 			.text(width * 0.5, height * 0.5, 'Settings here', {
 				font: '48px Arial',
 				// @ts-ignore
-				fill: '#000000',
+				color: '#000000',
 			})
 			.setOrigin(0.5)
 	}

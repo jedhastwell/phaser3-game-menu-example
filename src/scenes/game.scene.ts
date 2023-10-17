@@ -18,6 +18,12 @@ export class GameScene extends Phaser.Scene {
 		platform: Phaser.GameObjects.GameObject
 		isTweening: boolean
 	}[]
+	private buttons = {} as {
+		left: Phaser.GameObjects.Image
+		right: Phaser.GameObjects.Image
+		up1: Phaser.GameObjects.Image
+		up2: Phaser.GameObjects.Image
+	}
 
 	constructor(
 		private levelIndex: number,
@@ -342,70 +348,107 @@ export class GameScene extends Phaser.Scene {
 		}
 	}
 
+	private leftFires() {
+		this.cursors.left.isDown = true
+		this.buttons.left.setTint(0x00ff00)
+	}
+	private leftRelease() {
+		this.cursors.left.isDown = false
+		this.buttons.left.setTint(0xffffff)
+	}
+
+	private rightFires() {
+		this.cursors.right.isDown = true
+		this.buttons.right.setTint(0x00ff00)
+	}
+	private rightRelease() {
+		this.cursors.right.isDown = false
+		this.buttons.right.setTint(0xffffff)
+	}
+
+	private upFires() {
+		this.cursors.up.isDown = true
+		this.buttons.up1.setTint(0x0000ff)
+		this.buttons.up2.setTint(0x0000ff)
+	}
+	private upRelease() {
+		this.cursors.up.isDown = false
+		this.buttons.up1.setTint(0xffffff)
+		this.buttons.up2.setTint(0xffffff)
+	}
+
 	private setControlButtons() {
 		const { width, height } = this.scale
-		const leftButton = this.add
+		this.buttons.left = this.add
 			.image(10, height - 115, 'button-green-left')
 			.setOrigin(0, 0)
 			.setDisplaySize(64, 64)
 			.setInteractive({
 				cursor: 'url(assets/input/sword-glowing.cur), pointer',
 			})
-		leftButton.on('pointerdown', () => {
-			this.cursors.left.isDown = true
-			leftButton.setTint(0x00ff00)
+		this.buttons.left.on('pointerdown', () => {
+			this.leftFires()
 		})
-		leftButton.on('pointerup', () => {
-			this.cursors.left.isDown = false
-			leftButton.setTint(0xffffff)
-		})
+		this.buttons.left
+			.on('pointerleave', () => {
+				this.leftRelease()
+			})
+			.on('pointerup', () => {
+				this.leftRelease()
+			})
 
-		const rightButton = this.add
+		this.buttons.right = this.add
 			.image(width - 10, height - 115, 'button-green-right')
 			.setOrigin(1, 0)
 			.setDisplaySize(64, 64)
 			.setInteractive({
 				cursor: 'url(assets/input/sword-glowing.cur), pointer',
 			})
-		rightButton.on('pointerdown', () => {
-			this.cursors.right.isDown = true
-			rightButton.setTint(0x00ff00)
+		this.buttons.right.on('pointerdown', () => {
+			this.rightFires()
 		})
-		rightButton.on('pointerup', () => {
-			this.cursors.right.isDown = false
-			rightButton.setTint(0xffffff)
-		})
+		this.buttons.right
+			.on('pointerleave', () => {
+				this.rightRelease()
+			})
+			.on('pointerup', () => {
+				this.rightRelease()
+			})
 
-		const upButton1 = this.add
+		this.buttons.up1 = this.add
 			.image(80, height - 165, 'button-blue-up')
 			.setOrigin(0, 0)
 			.setDisplaySize(64, 64)
 			.setInteractive({
 				cursor: 'url(assets/input/sword-glowing.cur), pointer',
 			})
-		upButton1.on('pointerdown', () => {
-			this.cursors.up.isDown = true
-			upButton1.setTint(0x0000ff)
+		this.buttons.up1.on('pointerdown', () => {
+			this.upFires()
 		})
-		upButton1.on('pointerup', () => {
-			this.cursors.up.isDown = false
-			upButton1.setTint(0xffffff)
-		})
+		this.buttons.up1
+			.on('pointerleave', () => {
+				this.upRelease()
+			})
+			.on('pointerup', () => {
+				this.upRelease()
+			})
 
-		const upButton2 = this.add
+		this.buttons.up2 = this.add
 			.image(width - 80, height - 165, 'button-blue-up')
 			.setOrigin(1, 0)
 			.setDisplaySize(64, 64)
 			.setInteractive({
 				cursor: 'url(assets/input/sword-glowing.cur), pointer',
 			})
-		upButton2.on('pointerdown', () => {
-			this.cursors.up.isDown = true
-			upButton2.setTint(0x0000ff)
+		this.buttons.up2.on('pointerdown', () => {
+			this.upFires()
 		})
-		upButton2.on('pointerup', () => {
-			this.cursors.up.isDown = false
-			upButton2.setTint(0xffffff)
-		})
+		this.buttons.up2
+			.on('pointerup', () => {
+				this.upRelease()
+			})
+			.on('pointerleave', () => {
+				this.upRelease()
+			})
 	}
 }

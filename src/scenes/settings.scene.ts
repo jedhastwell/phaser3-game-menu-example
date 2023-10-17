@@ -25,7 +25,7 @@ export class SettingsScene extends Phaser.Scene {
 
 		const { width, height } = this.scale
 		this.settings = this.add
-			.text(width * 0.5, height * 0.5, 'Settings here', {
+			.text(width * 0.5, height * 0.5, 'Settings may be here', {
 				font: '48px Arial',
 				// @ts-ignore
 				color: '#000000',

@@ -11,7 +11,10 @@ export class MainMenuScene extends Phaser.Scene {
 	preload() {
 		const { width, height } = this.scale
 		// Add splash logo to the scene while content is preloading.
-		this.add.image(width * 0.5, height * 0.3, 'logo').setOrigin(0.5)
+		this.add
+			.image(width * 0.5, height * 0.3, 'logo')
+			.setOrigin(0.5)
+			.setDisplaySize(width / 2, width / 2)
 		const menuTop = height * 0.5 - 30
 		const menuGap = 55
 

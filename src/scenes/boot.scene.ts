@@ -6,13 +6,12 @@ export class BootScene extends Phaser.Scene {
 	}
 
 	init() {
+		const { width, height } = this.scale
 		this.input.setDefaultCursor('url(assets/input/diamond-sword.cur), default')
 		const progressBar = this.add.graphics()
 		const progressBox = this.add.graphics()
 		progressBox.fillStyle(0x222222, 0.8)
-		progressBox.fillRect(240, 270, 320, 50)
-
-		const { width, height } = this.scale
+		progressBox.fillRect(width / 2 - width / 4, height / 2 - 5, width / 2, 40)
 		const loadingText = this.make.text({
 			x: width / 2,
 			y: height / 2 - 50,
@@ -27,7 +26,7 @@ export class BootScene extends Phaser.Scene {
 
 		const percentText = this.make.text({
 			x: width / 2,
-			y: height / 2 - 5,
+			y: height / 2 + 15,
 			text: '0%',
 			style: {
 				font: '18px Arial',
@@ -52,7 +51,12 @@ export class BootScene extends Phaser.Scene {
 		this.load.on('progress', function (value: number) {
 			progressBar.clear()
 			progressBar.fillStyle(0xffffff, 1)
-			progressBar.fillRect(250, 280, 300 * value, 30)
+			progressBar.fillRect(
+				width / 2 - width / 4 + 5,
+				height / 2,
+				(width / 2 - 10) * value,
+				30,
+			)
 			percentText.setText(parseInt(String(value * 100)) + '%')
 		})
 
@@ -86,6 +90,10 @@ export class BootScene extends Phaser.Scene {
 			frameWidth: 32,
 			frameHeight: 48,
 		})
+
+		this.load.image('button-blue-up', 'assets/ui/button-blue-up.png')
+		this.load.image('button-green-left', 'assets/ui/button-green-left.png')
+		this.load.image('button-green-right', 'assets/ui/button-green-right.png')
 	}
 
 	create() {

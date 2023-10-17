@@ -25,11 +25,16 @@ export class CreditsScene extends Phaser.Scene {
 
 		const { width, height } = this.scale
 		this.credits = this.add
-			.text(width * 0.5, height * 0.5, 'Credits here', {
-				font: '48px Arial',
-				// @ts-ignore
-				color: '#000000',
-			})
+			.text(
+				width * 0.5,
+				height * 0.5,
+				`Created by\nAndrey Zolotarev\n within UmbrellaIT\nGameJam`,
+				{
+					font: '48px Arial',
+					// @ts-ignore
+					color: '#000000',
+				},
+			)
 			.setOrigin(0.5)
 	}
 

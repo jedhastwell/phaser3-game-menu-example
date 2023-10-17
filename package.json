@@ -10,18 +10,19 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "release": "butler/butler.exe push -i ./butler/butler_creds dist zolotarev/zombie-smasher:HTML",
+    "deploy": "butler/butler.exe push -i ./butler/butler_creds dist zolotarev/zombie-smasher:HTML",
+    "release": "yarn build && yarn deploy",
     "login": "butler/butler.exe login -i ./butler/butler_creds"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
-    "eslint": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
-    "vite": "^4.4.10",
+    "vite": "^4.4.11",
     "vite-plugin-static-copy": "^0.17.0"
   },
   "dependencies": {

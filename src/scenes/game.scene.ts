@@ -49,6 +49,10 @@ export class GameScene extends Phaser.Scene {
 
 		//===
 
+		this.setControlButtons()
+
+		//===
+
 		this.createPlayer()
 
 		//===
@@ -117,7 +121,8 @@ export class GameScene extends Phaser.Scene {
 	}
 
 	private createPlayer() {
-		this.player = this.physics.add.sprite(100, 450, 'dude')
+		const { width, height } = this.scale
+		this.player = this.physics.add.sprite(width / 2, height / 2, 'dude')
 
 		this.player.setBounce(0.2)
 		this.player.setCollideWorldBounds(true)
@@ -137,16 +142,18 @@ export class GameScene extends Phaser.Scene {
 	private createMap() {
 		this.add.image(0, 0, 'sky').setOrigin(0, 0).setDisplaySize(540, 960)
 		this.platforms = this.physics.add.staticGroup()
-		this.platformItemsLeft = this.platformItemsRight = []
+		this.platformItemsLeft = []
+		this.platformItemsRight = []
 
 		this.platforms
 			.create(0, 960, 'ground')
 			.setOrigin(0, 1)
 			.setScale(1)
 			.setDisplaySize(540, 50)
+			.setTint(0x00ff00)
 			.refreshBody()
 
-		for (let i = 1; i <= 10; i++) {
+		for (let i = 1; i <= 8; i++) {
 			const platformLeft = this.platforms
 				.create(
 					-350 + Phaser.Math.Between(0, 150),
@@ -259,6 +266,9 @@ export class GameScene extends Phaser.Scene {
 			yoyo: false,
 			duration: 2000,
 			repeat: 0,
+			onUpdate: () => {
+				platform.platform.refreshBody()
+			},
 			onComplete: () => {
 				platform.isTweening = false
 				platform.platform.refreshBody()
@@ -295,22 +305,21 @@ export class GameScene extends Phaser.Scene {
 	}
 
 	update() {
-		if (Phaser.Math.Between(0, 100) >= 80) {
-			const platformIndex = Phaser.Math.Between(0, 9)
-			if (Phaser.Math.Between(0, 100) >= 50)
+		const isMovingTime = Phaser.Math.Between(0, 100) >= 90
+		if (isMovingTime) {
+			const platformIndex = Phaser.Math.Between(0, 7)
+			if (Phaser.Math.Between(0, 100) >= 50) {
 				this.movePlatform(
 					this.platformItemsLeft[platformIndex],
 					Phaser.Math.Between(-200, -400),
 				)
-			else this.movePlatform(this.platformItemsRight[platformIndex], 100)
+			} else {
+				this.movePlatform(
+					this.platformItemsRight[platformIndex],
+					Phaser.Math.Between(700, 930),
+				)
+			}
 		}
-
-		this.platformItemsLeft.map((p:any) => {
-			p.platform.refreshBody()
-		})
-		this.platformItemsRight.map((p:any) => {
-			p.platform.refreshBody()
-		})
 
 		if (!this.cursors) return
 
@@ -331,5 +340,72 @@ export class GameScene extends Phaser.Scene {
 		if (this.cursors.up.isDown && this.player.body.touching.down) {
 			this.player.setVelocityY(-500)
 		}
+	}
+
+	private setControlButtons() {
+		const { width, height } = this.scale
+		const leftButton = this.add
+			.image(10, height - 115, 'button-green-left')
+			.setOrigin(0, 0)
+			.setDisplaySize(64, 64)
+			.setInteractive({
+				cursor: 'url(assets/input/sword-glowing.cur), pointer',
+			})
+		leftButton.on('pointerdown', () => {
+			this.cursors.left.isDown = true
+			leftButton.setTint(0x00ff00)
+		})
+		leftButton.on('pointerup', () => {
+			this.cursors.left.isDown = false
+			leftButton.setTint(0xffffff)
+		})
+
+		const rightButton = this.add
+			.image(width - 10, height - 115, 'button-green-right')
+			.setOrigin(1, 0)
+			.setDisplaySize(64, 64)
+			.setInteractive({
+				cursor: 'url(assets/input/sword-glowing.cur), pointer',
+			})
+		rightButton.on('pointerdown', () => {
+			this.cursors.right.isDown = true
+			rightButton.setTint(0x00ff00)
+		})
+		rightButton.on('pointerup', () => {
+			this.cursors.right.isDown = false
+			rightButton.setTint(0xffffff)
+		})
+
+		const upButton1 = this.add
+			.image(80, height - 165, 'button-blue-up')
+			.setOrigin(0, 0)
+			.setDisplaySize(64, 64)
+			.setInteractive({
+				cursor: 'url(assets/input/sword-glowing.cur), pointer',
+			})
+		upButton1.on('pointerdown', () => {
+			this.cursors.up.isDown = true
+			upButton1.setTint(0x0000ff)
+		})
+		upButton1.on('pointerup', () => {
+			this.cursors.up.isDown = false
+			upButton1.setTint(0xffffff)
+		})
+
+		const upButton2 = this.add
+			.image(width - 80, height - 165, 'button-blue-up')
+			.setOrigin(1, 0)
+			.setDisplaySize(64, 64)
+			.setInteractive({
+				cursor: 'url(assets/input/sword-glowing.cur), pointer',
+			})
+		upButton2.on('pointerdown', () => {
+			this.cursors.up.isDown = true
+			upButton2.setTint(0x0000ff)
+		})
+		upButton2.on('pointerup', () => {
+			this.cursors.up.isDown = false
+			upButton2.setTint(0xffffff)
+		})
 	}
 }

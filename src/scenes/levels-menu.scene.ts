@@ -20,44 +20,64 @@ export class LevelsMenuScene extends Phaser.Scene {
 		})
 
 		menu.setInteractive({
-			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+			cursor: 'url(assets/input/sword-glowing.cur), pointer',
 		})
 		menu.on('pointerup', () => this.scene.start('MainMenuScene'))
 
-		const { width, height } = this.scale
+		const { width } = this.scale
 		// Add level menu buttons.
 
 		const itemsPerRow = 4
 		this.levelsBlock = this.add.container(
-			width * 0.5 - (80 + itemsPerRow * 150) / 2,
-			height * 0.5 - (140 + Math.floor(levels.length / itemsPerRow) * 120) / 2,
+			width * 0.5 - (120 + itemsPerRow * 130) / 2,
+			10,
 		)
 		for (let i = 0; i < levels.length; i++) {
 			const unlocked = i <= gameState.maxUnlockedLevel()
-			const button = this.add.text(
-				80 + (i % itemsPerRow) * 150,
-				140 + Math.floor(i / itemsPerRow) * 120,
-				levels[i].name,
-				{
-					font: '30px Arial',
-					// @ts-ignore
-					color: '#000000',
-				},
-			)
+
+			const button = this.add
+				.nineslice(
+					70 + (i % itemsPerRow) * 130,
+					140 + Math.floor(i / itemsPerRow) * 60,
+					'button-blue',
+				)
+				.setOrigin(0, 0.5)
+				.setSize(120, 50)
+			this.add
+				.text(
+					80 + (i % itemsPerRow) * 130,
+					150 + Math.floor(i / itemsPerRow) * 60,
+					levels[i].name,
+					{
+						font: '26px Arial',
+						// @ts-ignore
+						color: '#000000',
+					},
+				)
+				.setOrigin(0.5)
+
 			this.levelsBlock.add(button, true)
 			button.alpha = unlocked ? 1 : 0.5
-			button.setPosition(
-				80 + (i % itemsPerRow) * 150,
-				40 + Math.floor(i / itemsPerRow) * 120,
-			)
+
 			if (unlocked) {
 				button.setInteractive({
-					cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+					cursor: 'url(assets/input/sword-glowing.cur), pointer',
 				})
-				// When menu button is clicked, switch to game scene and pass along the index for the selected level.
-				button.on('pointerup', () =>
-					this.scene.start('GameScene', { levelIndex: i }),
-				)
+
+				button.on('pointerover', () => {
+					button.setTexture('button-red')
+				})
+
+				button.on('pointerout', () => {
+					button.setTexture('button-blue')
+				})
+				button.on('pointerdown', () => {
+					button.setTint(0xff66ff)
+				})
+				button.on('pointerup', () => {
+					button.setTint(0xffffff)
+					this.scene.start('GameScene', { levelIndex: i })
+				})
 			}
 		}
 	}

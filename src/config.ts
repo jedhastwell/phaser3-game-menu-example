@@ -6,9 +6,9 @@ export default {
 	parent: 'app',
 	backgroundColor: '#33A5E7',
 	scale: {
-		width: 300,
-		height: 300,
-		mode: Phaser.Scale.RESIZE,
+		width: 540,
+		height: 960,
+		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 	},
 	physics: {

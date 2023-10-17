@@ -10,6 +10,14 @@ export class GameScene extends Phaser.Scene {
 	private scoreText = {} as Phaser.GameObjects.Text
 	private bombs = {} as Phaser.Physics.Arcade.Group
 	private platforms = {} as Phaser.Physics.Arcade.StaticGroup
+	private platformItemsLeft = [] as {
+		platform: Phaser.GameObjects.GameObject
+		isTweening: boolean
+	}[]
+	platformItemsRight = [] as {
+		platform: Phaser.GameObjects.GameObject
+		isTweening: boolean
+	}[]
 
 	constructor(
 		private levelIndex: number,
@@ -82,18 +90,23 @@ export class GameScene extends Phaser.Scene {
 
 	private createScore(width: number) {
 		this.scoreText = this.add
-			.text(width - 16, 16, 'score: ' + this.score, {
-				fontSize: '32px',
-				color: '#000',
-			})
+			.text(
+				width - 16,
+				16,
+				`score: ${this.score} of ${100 * (this.levelIndex + 1)}`,
+				{
+					fontSize: '32px',
+					color: '#000',
+				},
+			)
 			.setOrigin(1, 0)
 	}
 
 	private createStars() {
 		this.stars = this.physics.add.group({
 			key: 'star',
-			repeat: 11,
-			setXY: { x: 12, y: 0, stepX: 70 },
+			repeat: 9,
+			setXY: { x: 12, y: 0, stepX: 44 },
 		})
 
 		this.stars.children.iterate((child: any) => {
@@ -109,26 +122,6 @@ export class GameScene extends Phaser.Scene {
 		this.player.setBounce(0.2)
 		this.player.setCollideWorldBounds(true)
 
-		this.anims.create({
-			key: 'left',
-			frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-			frameRate: 10,
-			repeat: -1,
-		})
-
-		this.anims.create({
-			key: 'turn',
-			frames: [{ key: 'dude', frame: 4 }],
-			frameRate: 20,
-		})
-
-		this.anims.create({
-			key: 'right',
-			frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-			frameRate: 10,
-			repeat: -1,
-		})
-
 		this.player.body.setGravityY(300)
 
 		//===
@@ -142,24 +135,55 @@ export class GameScene extends Phaser.Scene {
 	}
 
 	private createMap() {
-		this.add.image(400, 300, 'sky')
+		this.add.image(0, 0, 'sky').setOrigin(0, 0).setDisplaySize(540, 960)
 		this.platforms = this.physics.add.staticGroup()
+		this.platformItemsLeft = this.platformItemsRight = []
 
-		this.platforms.create(400, 568, 'ground').setScale(2).refreshBody()
+		this.platforms
+			.create(0, 960, 'ground')
+			.setOrigin(0, 1)
+			.setScale(1)
+			.setDisplaySize(540, 50)
+			.refreshBody()
 
-		this.platforms.create(600, 400, 'ground')
-		this.platforms.create(50, 250, 'ground')
-		this.platforms.create(750, 220, 'ground')
+		for (let i = 1; i <= 10; i++) {
+			const platformLeft = this.platforms
+				.create(
+					-350 + Phaser.Math.Between(0, 150),
+					i * 96 + Phaser.Math.Between(-30, 30),
+					'ground',
+				)
+				.setOrigin(0, 0)
+				.refreshBody()
+
+			this.platformItemsLeft.push({
+				platform: platformLeft,
+				isTweening: false,
+			})
+
+			const platformRight = this.platforms
+				.create(
+					540 + 350 - Phaser.Math.Between(0, 200),
+					i * 96 + Phaser.Math.Between(-30, 30),
+					'ground',
+				)
+				.setOrigin(1, 0)
+				.refreshBody()
+
+			this.platformItemsRight.push({
+				platform: platformRight,
+				isTweening: false,
+			})
+		}
 	}
 
 	private setBackButton() {
 		const backButton = this.add.text(10, 10, this.levelData.name, {
 			font: '48px Arial',
-			// @ts-ignore
 			color: '#000000',
 		})
 		backButton.setInteractive({
-			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+			cursor: 'url(assets/input/sword-glowing.cur), pointer',
 		})
 		backButton.on('pointerup', () => this.scene.start('LevelsMenuScene'))
 	}
@@ -169,15 +193,14 @@ export class GameScene extends Phaser.Scene {
 	}
 
 	collectStar(player: any, star: any) {
-		star.setTint(0xffff00)
-		star.disableBody(true, false)
-		setTimeout(() => {
-			this.score += 10
-			this.scoreText.setText('Score: ' + this.score)
-			star.disableBody(true, true)
-		}, 300)
+		star.disableBody(true, true)
+		this.score += 10
+		this.scoreText.setText(
+			`score: ${this.score} of ${100 * (this.levelIndex + 1)}
+			(${this.stars.countActive(true)})`,
+		)
 
-		if (this.score >= 300) {
+		if (this.score >= 100 * (this.levelIndex + 1)) {
 			this.completeLevel(player)
 		}
 
@@ -190,8 +213,8 @@ export class GameScene extends Phaser.Scene {
 			for (let i = 0; i <= this.levelIndex; i++) {
 				const x =
 					player.x < 400
-						? Phaser.Math.Between(400, 800)
-						: Phaser.Math.Between(0, 400)
+						? Phaser.Math.Between(270, 540)
+						: Phaser.Math.Between(0, 270)
 				const bomb = this.bombs.create(x, 16, 'bomb')
 				bomb.setBounce(1)
 				bomb.setCollideWorldBounds(true)
@@ -228,6 +251,21 @@ export class GameScene extends Phaser.Scene {
 		}, 1000)
 	}
 
+	movePlatform(platform: any, move: number = -200) {
+		platform.isTweening = true
+		this.tweens.add({
+			targets: platform.platform,
+			x: move,
+			yoyo: false,
+			duration: 2000,
+			repeat: 0,
+			onComplete: () => {
+				platform.isTweening = false
+				platform.platform.refreshBody()
+			},
+		})
+	}
+
 	completeLevel(player: any) {
 		const { width, height } = this.scale
 		this.physics.pause()
@@ -257,6 +295,23 @@ export class GameScene extends Phaser.Scene {
 	}
 
 	update() {
+		if (Phaser.Math.Between(0, 100) >= 80) {
+			const platformIndex = Phaser.Math.Between(0, 9)
+			if (Phaser.Math.Between(0, 100) >= 50)
+				this.movePlatform(
+					this.platformItemsLeft[platformIndex],
+					Phaser.Math.Between(-200, -400),
+				)
+			else this.movePlatform(this.platformItemsRight[platformIndex], 100)
+		}
+
+		this.platformItemsLeft.map((p:any) => {
+			p.platform.refreshBody()
+		})
+		this.platformItemsRight.map((p:any) => {
+			p.platform.refreshBody()
+		})
+
 		if (!this.cursors) return
 
 		if (this.cursors.left.isDown) {

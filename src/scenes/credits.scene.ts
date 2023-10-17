@@ -19,7 +19,7 @@ export class CreditsScene extends Phaser.Scene {
 			color: '#000000',
 		})
 		backButton.setInteractive({
-			cursor: 'url(/assets/input/sword-glowing.cur), pointer',
+			cursor: 'url(assets/input/sword-glowing.cur), pointer',
 		})
 		backButton.on('pointerup', () => this.scene.start('MainMenuScene'))
 

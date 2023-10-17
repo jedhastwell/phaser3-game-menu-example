@@ -6,7 +6,7 @@ export class BootScene extends Phaser.Scene {
 	}
 
 	init() {
-		this.input.setDefaultCursor('url(/assets/input/diamond-sword.cur), default')
+		this.input.setDefaultCursor('url(assets/input/diamond-sword.cur), default')
 		const progressBar = this.add.graphics()
 		const progressBox = this.add.graphics()
 		progressBox.fillStyle(0x222222, 0.8)
@@ -77,6 +77,15 @@ export class BootScene extends Phaser.Scene {
 			frameWidth: 32,
 			frameHeight: 64,
 		})
+
+		this.load.image('sky', 'assets/map/sky.png')
+		this.load.image('ground', 'assets/map/platform.png')
+		this.load.image('star', 'assets/map/star.png')
+		this.load.image('bomb', 'assets/map/bomb.png')
+		this.load.spritesheet('dude', 'assets/map/dude.png', {
+			frameWidth: 32,
+			frameHeight: 48,
+		})
 	}
 
 	create() {
@@ -84,6 +93,25 @@ export class BootScene extends Phaser.Scene {
 		this.anims.create({
 			key: 'hero-running',
 			frames: this.anims.generateFrameNumbers('hero-run-sheet'),
+			frameRate: 10,
+			repeat: -1,
+		})
+		this.anims.create({
+			key: 'left',
+			frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+			frameRate: 10,
+			repeat: -1,
+		})
+
+		this.anims.create({
+			key: 'turn',
+			frames: [{ key: 'dude', frame: 4 }],
+			frameRate: 20,
+		})
+
+		this.anims.create({
+			key: 'right',
+			frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
 			frameRate: 10,
 			repeat: -1,
 		})

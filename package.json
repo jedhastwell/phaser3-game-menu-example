@@ -10,7 +10,7 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "butler/butler.exe push -i ./butler/butler_creds dist zolotarev/zombie-smasher:HTML",
+    "deploy": "butler/butler.exe push -i ./butler/butler_creds dist zolotarev/star-lord:HTML",
     "release": "yarn build && yarn deploy",
     "login": "butler/butler.exe login -i ./butler/butler_creds"
   },

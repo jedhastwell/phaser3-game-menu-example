@@ -51,6 +51,9 @@ export class GameScene extends Phaser.Scene {
 	create() {
 		const { width } = this.scale
 
+		this.input.setPollAlways()
+		this.input.addPointer(3)
+
 		this.createMap()
 
 		//===
@@ -327,24 +330,28 @@ export class GameScene extends Phaser.Scene {
 			}
 		}
 
-		if (!this.cursors) return
-
 		if (this.cursors.left.isDown) {
+			this.leftFires()
 			this.player.setVelocityX(-160)
-
 			this.player.anims.play('left', true)
 		} else if (this.cursors.right.isDown) {
+			this.rightFires()
 			this.player.setVelocityX(160)
-
 			this.player.anims.play('right', true)
 		} else {
+			this.leftRelease()
+			this.rightRelease()
 			this.player.setVelocityX(0)
-
 			this.player.anims.play('turn')
 		}
 
 		if (this.cursors.up.isDown && this.player.body.touching.down) {
+			this.upFires()
 			this.player.setVelocityY(-500)
+		}
+
+		if (!this.cursors.up.isDown) {
+			this.upRelease()
 		}
 	}
 
@@ -390,7 +397,7 @@ export class GameScene extends Phaser.Scene {
 			this.leftFires()
 		})
 		this.buttons.left
-			.on('pointerleave', () => {
+			.on('pointerout', () => {
 				this.leftRelease()
 			})
 			.on('pointerup', () => {
@@ -408,7 +415,7 @@ export class GameScene extends Phaser.Scene {
 			this.rightFires()
 		})
 		this.buttons.right
-			.on('pointerleave', () => {
+			.on('pointerout', () => {
 				this.rightRelease()
 			})
 			.on('pointerup', () => {
@@ -426,7 +433,7 @@ export class GameScene extends Phaser.Scene {
 			this.upFires()
 		})
 		this.buttons.up1
-			.on('pointerleave', () => {
+			.on('pointerout', () => {
 				this.upRelease()
 			})
 			.on('pointerup', () => {
@@ -447,7 +454,7 @@ export class GameScene extends Phaser.Scene {
 			.on('pointerup', () => {
 				this.upRelease()
 			})
-			.on('pointerleave', () => {
+			.on('pointerout', () => {
 				this.upRelease()
 			})
 	}
